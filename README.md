@@ -6,19 +6,23 @@ This project is a Python script that simultaneously records video from a USB cam
 
 Before running the script, ensure that the following libraries and tools are installed on your system:
 
+pip install opencv-python pyaudio numpy ffmpeg-python matplotlib
+
+
 ### Python Libraries
 
 - `opencv-python`: For video capture and processing.
-- `pyaudio`: For audio capture (requires PortAudio development files).
 - `wave`: For saving audio files.
 - `numpy`: For numerical operations.
 - `ffmpeg-python`: For combining video and audio into an `.mp4` file.
 - `threading`: For running video and audio capture simultaneously.
+- `matplotlib`: En tiiä
 
 Install the required Python packages using pip:
 
 ```bash
-pip install opencv-python pyaudio numpy ffmpeg-python
+pip install opencv-python sounddevice numpy ffmpeg-python matplotlib
+
 
 ### System Dependencies
 FFmpeg: A multimedia framework used to combine audio and video. Install it on Ubuntu with:
