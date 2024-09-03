@@ -5,7 +5,6 @@ import numpy as np
 import ffmpeg
 import threading
 import logging
-import time
 
 # Audio configuration
 FORMAT = np.int16
@@ -39,7 +38,7 @@ def record_audio():
         with sd.InputStream(samplerate=RATE, channels=CHANNELS, dtype=FORMAT, callback=audio_callback):
             logging.info("Recording audio...")
             while recording:
-                sd.sleep(50)  # Reduce sleep time to check the recording flag more frequently
+                sd.sleep(50)
     except Exception as e:
         logging.error(f"Error during audio recording: {e}")
 
@@ -62,15 +61,16 @@ def record_video():
 
     cap = cv2.VideoCapture(0)
 
-    # Get video width and height
+    # Get video width, height, and FPS
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = cap.get(cv2.CAP_PROP_FPS)
 
     # Define the codec and create VideoWriter object
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter(VIDEO_OUTPUT, fourcc, 20.0, (width, height))
+    out = cv2.VideoWriter(VIDEO_OUTPUT, fourcc, fps, (width, height))
 
-    logging.info("Recording video...")
+    logging.info(f"Recording video at {fps} FPS...")
     try:
         while recording:
             ret, frame = cap.read()
@@ -112,7 +112,8 @@ if os.path.exists(AUDIO_OUTPUT):
     # Combine audio and video using ffmpeg
     input_video = ffmpeg.input(VIDEO_OUTPUT)
     input_audio = ffmpeg.input(AUDIO_OUTPUT)
-    ffmpeg.output(input_video, input_audio, FINAL_OUTPUT, vcodec='libx264', acodec='aac').run()
+    fps = cv2.VideoCapture(VIDEO_OUTPUT).get(cv2.CAP_PROP_FPS)
+    ffmpeg.output(input_video, input_audio, FINAL_OUTPUT, vcodec='libx264', acodec='aac', r=fps).run()
 
     logging.info(f"Recording saved as {FINAL_OUTPUT}")
 else:
