@@ -43,7 +43,7 @@ Run the script:
 bash
 Copy code
 python3 record.py
-The script will start recording both audio and video simultaneously. You can stop the recording by pressing Enter in the terminal.
+The script will start recording both audio and video simultaneously. Press Q button from the keyboard in the video window to stop recording.
 
 Once the recording stops, the script will automatically combine the audio and video files into an .mp4 file named final_output.mp4.
 
@@ -60,9 +60,7 @@ Video Settings:
 
 VIDEO_OUTPUT: File name for the raw video output (default is output_video.avi).
 FINAL_OUTPUT: File name for the final combined video and audio output (default is final_output.mp4).
-Stopping the Recording
-Method 1: Press Enter in the terminal to stop recording (default behavior).
-Method 2: If you modify the script to handle KeyboardInterrupt, you can press Ctrl+C to stop recording.
+Stopping the Recording : Press Q button from the keyboard in the video window
 Troubleshooting
 PyAudio Installation Issues: If you encounter errors while installing pyaudio, ensure that the PortAudio development files are installed (sudo apt-get install portaudio19-dev).
 
